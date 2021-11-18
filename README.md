@@ -1,6 +1,6 @@
 # 購物商城專題
-Spring Boot
-MariaDB
-JavaScript
-JQuery
+Spring Boot                                                                                                                                                                         
+MariaDB                                                                                                                                                                             
+JavaScript                                                                                                                                                                         
+JQuery                                                                                                                                                                             
 Java

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- 對應哪個接口 -->
+<mapper namespace="cn.tedu.store.mapper.CartMapper">
+		
+		<insert id="insert" useGeneratedKeys="true" keyProperty="cid">
+			INSERT INTO t_cart (
+			    uid, gid,
+			    num,
+			    created_user, created_time,
+			    modified_user, modified_time
+			) VALUES (
+				#{uid}, #{gid},
+			    #{num},
+			    #{createdUser}, #{createdTime},
+			    #{modifiedUser}, #{modifiedTime}
+			)
+		</insert>
+		
+		<update id="updateNum">
+			UPDATE
+				t_cart
+			SET
+				num=#{num},
+				modified_user=#{modifiedUser},
+				modified_time=#{modifiedTime}
+			WHERE
+				cid=#{cid}
+		</update>
+		
+		<select id="findByUidAndGid"
+			resultType="cn.tedu.store.entity.Cart">
+			SELECT
+				cid, num
+			FROM
+				t_cart
+			WHERE
+				uid=#{uid} AND gid=#{gid}
+		</select>
+		
+		<select id="findByUid" resultType="cn.tedu.store.vo.CartVO">
+			select 
+				cid, uid, gid, title, price, image, t_cart.num
+			from 
+				t_cart 
+			left join 
+				t_goods
+			on 
+				t_cart.gid=t_goods.id
+			where 
+				uid=#{uid} 
+			order by 
+				t_cart.created_time desc 
+	    </select>
+	    
+	    <select id="findByCid" resultType="cn.tedu.store.entity.Cart">
+			SELECT
+				uid, num
+			FROM
+				t_cart
+			WHERE
+				cid=#{cid}
+		</select>
+		
+		<select id="findByCids" resultType="cn.tedu.store.vo.CartVO">
+		select 
+			cid, uid, gid, title, price, image, t_cart.num
+		from t_cart 
+		left join t_goods
+		on t_cart.gid=t_goods.id
+		where cid in (
+			<foreach collection="array" item="cid" separator=",">
+				#{cid}
+			</foreach>
+		)
+		order by t_cart.created_time desc
+		</select>
+		
+</mapper>
+
+
+
+
+
+
+
+
+

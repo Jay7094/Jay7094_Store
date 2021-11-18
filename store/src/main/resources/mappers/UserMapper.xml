@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- 對應哪個接口 -->
+<mapper namespace="cn.tedu.store.mapper.UserMapper">
+	
+	<!-- 插入用戶數據 -->
+	<!-- Integer insert(User user) -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="uid">
+		insert into t_user(
+			username, password,
+			salt, gender,
+			phone, email,
+			avatar, is_delete,
+			created_user, created_time,
+			modified_user, modified_time
+		) values(
+			#{username}, #{password},
+			#{salt}, #{gender},
+			#{phone}, #{email},
+			#{avatar}, #{isDelete},
+			#{createdUser}, #{createdTime},
+			#{modifiedUser}, #{modifiedTime}
+		)
+	</insert>
+	
+	<!-- 根據用戶名查詢用戶數據 -->
+	<!-- User findByUsername(String username) -->
+	<select id="findByUsername" resultType="cn.tedu.store.entity.User">
+		select 
+			uid, username,
+			password, salt,
+			avatar, is_delete as isDelete
+		from
+			t_user
+		where
+			username=#{username}
+	</select>
+	
+	<!-- 根據用戶名查詢用戶數據 -->
+	<!-- User findByUid(String uid) -->
+	<select id="findByUid" resultType="cn.tedu.store.entity.User">
+		select 
+			username, phone,
+			email, gender,
+			password, salt,
+			is_delete as isDelete
+		from
+			t_user
+		where
+			uid=#{uid}
+	</select>
+		
+	<!-- 更新用戶基本資料 -->
+	<!-- Integer updateInfo(User user) -->	
+	<update id="updateInfo">
+		update
+			t_user
+		set
+			<if test="phone != null">
+				phone = #{phone},
+			</if>
+			email = #{email},
+			gender = #{gender},
+			modified_user = #{modifiedUser},
+			modified_time = #{modifiedTime}
+		where
+			uid = #{uid}
+	</update>
+		
+	<!-- 更新密碼 -->
+	<!-- Integer updatePassword(
+			@Param("uid") Integer uid,
+			@Param("password") String password,
+			@Param("modifiedUser") String modifiedUser,
+			@Param("modifiedTime") Integer modifiedTime
+	); -->	
+	<update id="updatePassword">
+		update
+			t_user
+		set
+			password = #{password},
+			modified_user = #{modifiedUser},
+			modified_time = #{modifiedTime}
+		where
+			uid = #{uid}		
+	</update>
+	
+	<!--  -->
+	<!--  -->
+	<update id="updateAvatar">
+		update
+			t_user
+		set
+			avatar = #{avatar},
+			modified_user = #{modifiedUser},
+			modified_time = #{modifiedTime}
+		where
+			uid = #{uid}		
+	</update>
+		
+</mapper>
+
+
+
+
+
+
+
+
+

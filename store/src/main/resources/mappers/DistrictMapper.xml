@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- 對應哪個接口 -->
+<mapper namespace="cn.tedu.store.mapper.DistrictMapper">
+	
+	<select id="findByParent" resultType="cn.tedu.store.entity.District">
+		select
+			id,parent,
+			code,name
+		from
+			t_dict_district
+		where
+			parent=#{parent}
+		order by
+			id
+	</select>
+	
+	<select id="findByCode" resultType="cn.tedu.store.entity.District">
+		select
+			name
+		from
+			t_dict_district
+		where
+			code=#{code}
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+

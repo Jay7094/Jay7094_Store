@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- 對應哪個接口 -->
+<mapper namespace="cn.tedu.store.mapper.AddressMapper">
+	
+	<!--  -->
+	<!--  -->
+	<insert id="insert"
+			useGeneratedKeys="true"
+			keyProperty="aid">
+			insert into t_address (
+				uid, name,
+				province_code, province_name,
+				city_code, city_name,
+				area_code, area_name,
+				zip, address,
+				phone, tel,
+				tag, is_default,
+				created_user, created_time,
+				modified_user, modified_time
+			) values (
+				#{uid}, #{name},
+				#{provinceCode}, #{provinceName},
+				#{cityCode}, #{cityName},
+				#{areaCode}, #{areaName},
+				#{zip}, #{address},
+				#{phone}, #{tel},
+				#{tag}, #{isDefault},
+				#{createdUser}, #{createdTime},
+				#{modifiedUser}, #{modifiedTime}
+			)
+	</insert>
+	
+	<delete id="deleteByAid">
+		delete from
+			t_address
+		where
+			aid=#{aid}
+	</delete>
+	
+	<!--  -->
+	<!--  -->
+	<select id="countByUid" resultType="java.lang.Integer">
+		select 
+			count(*) 
+		from 
+			t_address 
+		where 
+			uid=#{uid}
+	</select>
+	
+	<!--  -->
+	<!--  -->
+	<select id="findByUid" resultType="cn.tedu.store.entity.Address">
+		select
+			aid, name,
+			province_name as provinceName,
+			city_name as cityName,
+			area_name as areaName,
+			address, phone,
+			is_default as isDefault,
+			tag
+		from
+			t_address
+		where
+			uid=#{uid}
+		order by
+			is_default desc,
+			modified_time desc			
+	</select>
+	
+	<select id="findLastModified" resultType="cn.tedu.store.entity.Address">
+		select
+			aid
+		from
+			t_address
+		where
+			uid=#{uid}
+		order by
+			modified_time desc
+		limit 0,1
+	</select>
+	
+	<update id="updateNonDefault">
+		update 
+			t_address
+		set 
+			is_default=0
+		where 
+			uid=#{uid}
+	</update>
+	
+	<update id="updateDefault">
+		update 
+			t_address
+		set 
+			is_default=1,
+			modified_user=#{modifiedUser},
+			modified_time=#{modifiedTime}
+		where 
+			aid=#{aid}
+	</update>
+	
+	<select id="findByAid" resultType="cn.tedu.store.entity.Address">
+		select
+			uid, is_default AS isDefault,
+			name, phone,
+			province_name AS provinceName,
+			city_name AS cityName,
+			area_name AS areaName,
+			address
+		from 
+			t_address
+		where 
+			aid=#{aid}
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+

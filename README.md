@@ -1,2 +1,6 @@
-# Jay7094_Store
-購物商城專題
+# 購物商城專題
+Spring Boot
+MariaDB
+JavaScript
+JQuery
+Java
